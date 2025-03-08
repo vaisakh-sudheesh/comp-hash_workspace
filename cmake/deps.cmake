@@ -16,12 +16,12 @@ FetchContent_MakeAvailable(googletest googlebenchmark)
 add_custom_target(deps_xxHash
             COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/deps/xxHash-0.8.3 prefix=${CMAKE_BINARY_DIR} install -j8
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/deps/xxHash-0.8.3
-            COMMENT "Building xxHash"
+            COMMENT "Building xxHash."
         )
 
 add_custom_target(deps_lzbench
-            COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/deps/lzbench-2.0.1 clean
-            COMMAND make -C ${CMAKE_CURRENT_SOURCE_DIR}/deps/lzbench-2.0.1 prefix=${CMAKE_BINARY_DIR} -j8
+            ${CMAKE_COMMAND} -E env LIBRARY_BUILD=1 make -C ${CMAKE_CURRENT_SOURCE_DIR}/deps/lzbench-2.0.1 clean 
+            COMMAND ${CMAKE_COMMAND} -E env LIBRARY_BUILD=1 make -C ${CMAKE_CURRENT_SOURCE_DIR}/deps/lzbench-2.0.1 prefix=${CMAKE_BINARY_DIR} -j8
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/deps/lzbench-2.0.1
-            COMMENT "Building lzbench"
+            COMMENT "Building lzbench as library."
         )

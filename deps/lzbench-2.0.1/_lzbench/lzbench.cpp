@@ -819,7 +819,7 @@ char* cpu_brand_string(void)
     #endif // (defined(__i386__) || defined(__x86_64__))
 }
 
-
+#ifndef EXCLUDE_MAIN_FUNCTION
 int main( int argc, char** argv)
 {
     FILE *in;
@@ -1054,3 +1054,5 @@ _clean:
         free(cpu_brand);
     return result;
 }
+
+#endif /* EXCLUDE_MAIN_FUNCTION */
