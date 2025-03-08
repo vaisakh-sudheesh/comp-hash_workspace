@@ -1,0 +1,31 @@
+name: Rust Version Compatibility
+
+on:
+  # Trigger when merged on main
+  push:
+    branches: [ "main" ]
+  # Manual trigger
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+
+  build_test_x86:
+    name: Build & Test X86
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["1.65", "1.72", "1.78"]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install ${{ matrix.version }}
+      run: rustup toolchain install ${{ matrix.version }}
+
+    - name: Build
+      run: cargo +${{ matrix.version }} build --release

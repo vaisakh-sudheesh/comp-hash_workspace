@@ -1,0 +1,62 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_test_x86:
+    name: Build & Test X86
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Rust version
+      run: cargo rustc -- --version
+
+    - name: Build
+      run: cargo build --release
+
+    - name: Test
+      run: cargo test --release
+
+  build_test_x86_avx2:
+    name: Build & Test X86 AVX2
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Switch to nightly rust
+      run: rustup default nightly
+
+    - name: Rust version
+      run: cargo rustc -- --version
+
+    - name: Build
+      run: cargo build --release --features hybrid
+
+    - name: Test
+      run: cargo test --release --features hybrid
+
+  build_test_arm:
+    name: Build & Test ARM
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Rust version
+      run: cargo rustc -- --version
+
+    - name: Build
+      run: cargo build --release
+
+    - name: Test
+      run: cargo test --release
