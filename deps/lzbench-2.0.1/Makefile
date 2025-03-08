@@ -537,37 +537,37 @@ endif
 
 
 
-# CUDA-based codecs
-CUDA_BASE ?= /usr/local/cuda
-LIBCUDART=$(wildcard $(CUDA_BASE)/lib64/libcudart.so)
+# # CUDA-based codecs
+# CUDA_BASE ?= /usr/local/cuda
+# LIBCUDART=$(wildcard $(CUDA_BASE)/lib64/libcudart.so)
 
-ifeq "$(LIBCUDART)" ""
-    $(info CUDA Toolkit not found at $(CUDA_BASE), CUDA support will be disabled.)
-    $(info Run "make CUDA_BASE=..." to use a different path.)
-    CUDA_BASE =
-    LIBCUDART =
-else
-    DEFINES += -DBENCH_HAS_CUDA -I$(CUDA_BASE)/include
-    LDFLAGS += -L$(CUDA_BASE)/lib64 -lcudart -Wl,-rpath=$(CUDA_BASE)/lib64
-    CUDA_COMPILER = nvcc
-    CUDA_CC = $(CUDA_BASE)/bin/nvcc --compiler-bindir $(CXX)
-    CUDA_ARCH = 50 52 60 61 70 75 80 86 89
-    CUDA_CXXFLAGS = -x cu -std=c++14 -O3 $(foreach ARCH, $(CUDA_ARCH), --generate-code=arch=compute_$(ARCH),code=[compute_$(ARCH),sm_$(ARCH)]) --expt-extended-lambda -forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets
+# ifeq "$(LIBCUDART)" ""
+#     $(info CUDA Toolkit not found at $(CUDA_BASE), CUDA support will be disabled.)
+#     $(info Run "make CUDA_BASE=..." to use a different path.)
+#     CUDA_BASE =
+#     LIBCUDART =
+# else
+#     DEFINES += -DBENCH_HAS_CUDA -I$(CUDA_BASE)/include
+#     LDFLAGS += -L$(CUDA_BASE)/lib64 -lcudart -Wl,-rpath=$(CUDA_BASE)/lib64
+#     CUDA_COMPILER = nvcc
+#     CUDA_CC = $(CUDA_BASE)/bin/nvcc --compiler-bindir $(CXX)
+#     CUDA_ARCH = 50 52 60 61 70 75 80 86 89
+#     CUDA_CXXFLAGS = -x cu -std=c++14 -O3 $(foreach ARCH, $(CUDA_ARCH), --generate-code=arch=compute_$(ARCH),code=[compute_$(ARCH),sm_$(ARCH)]) --expt-extended-lambda -forward-unknown-to-host-compiler -Wno-deprecated-gpu-targets
 
-ifneq "$(DONT_BUILD_NVCOMP)" "1"
-    DEFINES += -DBENCH_HAS_NVCOMP
-    NVCOMP_CPP_SRC = $(wildcard nvcomp/src/*.cpp nvcomp/src/lowlevel/*.cpp)
-    NVCOMP_CPP_OBJ = $(NVCOMP_CPP_SRC:%=%.o)
-    NVCOMP_CU_SRC  = $(wildcard nvcomp/src/*.cu nvcomp/src/lowlevel/*.cu)
-    NVCOMP_CU_OBJ  = $(NVCOMP_CU_SRC:%=%.o)
-    NVCOMP_FILES   = $(NVCOMP_CU_OBJ) $(NVCOMP_CPP_OBJ)
-endif
+# ifneq "$(DONT_BUILD_NVCOMP)" "1"
+#     DEFINES += -DBENCH_HAS_NVCOMP
+#     NVCOMP_CPP_SRC = $(wildcard nvcomp/src/*.cpp nvcomp/src/lowlevel/*.cpp)
+#     NVCOMP_CPP_OBJ = $(NVCOMP_CPP_SRC:%=%.o)
+#     NVCOMP_CU_SRC  = $(wildcard nvcomp/src/*.cu nvcomp/src/lowlevel/*.cu)
+#     NVCOMP_CU_OBJ  = $(NVCOMP_CU_SRC:%=%.o)
+#     NVCOMP_FILES   = $(NVCOMP_CU_OBJ) $(NVCOMP_CPP_OBJ)
+# endif
 
-ifneq "$(DONT_BUILD_BSC)" "1"
-    BSC_FLAGS += -DLIBBSC_CUDA_SUPPORT
-    BSC_CUDA_FILES = libbsc/libbsc/bwt/libcubwt/libcubwt.cu.o libbsc/libbsc/st/st.cu.o
-endif
-endif # ifneq "$(LIBCUDART)"
+# ifneq "$(DONT_BUILD_BSC)" "1"
+#     BSC_FLAGS += -DLIBBSC_CUDA_SUPPORT
+#     BSC_CUDA_FILES = libbsc/libbsc/bwt/libcubwt/libcubwt.cu.o libbsc/libbsc/st/st.cu.o
+# endif
+# endif # ifneq "$(LIBCUDART)"
 
 
 
