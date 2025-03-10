@@ -9,7 +9,7 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/deps.cmake)
 include_directories(${CMAKE_BINARY_DIR}/include)
 enable_testing()
 add_executable(CompressionHashing_Testbed
-    tests/test_helloworld.cpp)
+    tests/test_xxhash.cpp)
 target_compile_definitions(CompressionHashing_Testbed PRIVATE LIBRARY_BUILD)
 target_link_libraries(CompressionHashing_Testbed gtest_main benchmark::benchmark lzbench xxhash)
 
