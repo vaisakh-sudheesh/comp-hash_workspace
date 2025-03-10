@@ -4,7 +4,6 @@
 #include <lzbench/lzbench-lib.h>
 
 #include <xxhash.h>
-#include <lzbench/lzbench-lib.h>
 
 #  include <stdint.h>
 typedef uint8_t  XSUM_U8;
