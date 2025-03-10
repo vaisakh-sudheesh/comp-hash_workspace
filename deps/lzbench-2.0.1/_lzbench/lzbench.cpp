@@ -819,7 +819,7 @@ char* cpu_brand_string(void)
     #endif // (defined(__i386__) || defined(__x86_64__))
 }
 
-#ifndef EXCLUDE_MAIN_FUNCTION
+#ifndef LZBENCH_LIBRARY
 int main( int argc, char** argv)
 {
     FILE *in;
@@ -1055,4 +1055,8 @@ _clean:
     return result;
 }
 
-#endif /* EXCLUDE_MAIN_FUNCTION */
+#else
+
+
+
+#endif /* LZBENCH_LIBRARY */

@@ -106,7 +106,7 @@ endif
 LZBENCH_FILES = _lzbench/lzbench.o _lzbench/lz_codecs.o _lzbench/buggy_codecs.o _lzbench/symmetric_codecs.o _lzbench/misc_codecs.o
 
 ifeq "$(LIBRARY_BUILD)" "1"
-    DEFINES += -DEXCLUDE_MAIN_FUNCTION
+    DEFINES += -DLZBENCH_LIBRARY
 endif
 
 ifeq "$(DONT_BUILD_BLOSCLZ)" "1"
@@ -588,7 +588,7 @@ install: liblzbench.a
 	install -d $(PREFIX)/lib
 	install -m 644 liblzbench.a $(PREFIX)/lib
 	install -d $(PREFIX)/include/lzbench
-	install -m 644 _lzbench/lzbench.h $(PREFIX)/include/lzbench
+	install -m 644 _lzbench/lzbench-lib.h $(PREFIX)/include/lzbench
 	@echo Installed liblzbench.a to $(PREFIX)/lib
 
 else 

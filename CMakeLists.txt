@@ -6,9 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/deps.cmake)
 
+include_directories(${CMAKE_BINARY_DIR}/include)
 enable_testing()
 add_executable(CompressionHashing_Testbed
     tests/test_helloworld.cpp)
-target_link_libraries(CompressionHashing_Testbed gtest_main benchmark::benchmark)
+target_compile_definitions(CompressionHashing_Testbed PRIVATE LIBRARY_BUILD)
+target_link_libraries(CompressionHashing_Testbed gtest_main benchmark::benchmark lzbench xxhash)
 
-add_dependencies(CompressionHashing_Testbed deps_xxHash deps_lzbench)
+add_dependencies(CompressionHashing_Testbed all_deps)
